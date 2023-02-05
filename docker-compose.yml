@@ -1,7 +1,7 @@
 version: "3.8"  
 
 services:
-  web:
+  container:
     container_name: project-bot-guardian_tales
     build: .
     environment:
