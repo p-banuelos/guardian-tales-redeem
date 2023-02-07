@@ -42,9 +42,11 @@ class GuardianTales:
     def list_codes(self):
         r = requests.get('https://www.pockettactics.com/guardian-tales/code')
         if r.status_code == 200:
+            coupons = []
             soup = BeautifulSoup(r.text, features='html.parser')
-            active, old = soup.find_all('ul',)[5:7]
-            coupons = self.parse_codes(active) + self.parse_codes(old)
+            for list_coupon in soup.find_all('ul'):
+                if any(x for x in ['active', 'expired'] if x in format(list_coupon.previous.previous).lower()):
+                    coupons += self.parse_codes(list_coupon)
             return coupons
 
     @staticmethod
