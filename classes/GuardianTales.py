@@ -31,7 +31,7 @@ class GuardianTales:
                     if f'Something unexpected has occurred' in r.text:
                         print(f'Seems the coupon {coupon}, is no longer valid')
                     else:
-                        print(f'Coupon {coupon} redeemed, {r.text}')
+                        print(f'Coupon {coupon} redeemed')
                     self.store_old(coupon)
                 else:
                     print(f'Error redeeming coupon {coupon}, check the html for error: {r.text}')
@@ -40,14 +40,20 @@ class GuardianTales:
 
 
     def list_codes(self):
+        coupons = []
         r = requests.get('https://www.pockettactics.com/guardian-tales/code')
-        if r.status_code == 200:
-            coupons = []
+        if r.status_code == 200:            
             soup = BeautifulSoup(r.text, features='html.parser')
             for list_coupon in soup.find_all('ul'):
                 if any(x for x in ['active', 'expired'] if x in format(list_coupon.previous.previous).lower()):
                     coupons += self.parse_codes(list_coupon)
-            return coupons
+        r = requests.get('https://ucngame.com/codes/guardian-tales-coupon-codes')
+        if r.status_code == 200:            
+            soup = BeautifulSoup(r.text, features='html.parser')
+            for list_coupon in soup.find_all('tbody')[0]:
+                coupons.append(list_coupon.contents[0].text)
+        list(set(coupons))
+        return coupons
 
     @staticmethod
     def parse_codes(rows):
