@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   container:
-    image: guardian-tales:latest
+    image: guardian_tales:latest
     container_name: project-bot-guardian_tales
     environment:
       - user_id=${user_id}
