@@ -1,7 +1,7 @@
 # guardian-tales-redeem
 Check for new codes and redeem them to the specified user_id account.
 
-To run locally, replace in main.py:
+To run locally, you can type your user when calling the GuardianTales class in main.py:
 
 | Original | New |
 | ------------- | ------------- |

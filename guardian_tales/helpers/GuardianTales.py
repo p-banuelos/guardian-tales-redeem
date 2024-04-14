@@ -61,6 +61,8 @@ class GuardianTales:
                         if x in format(list_coupon.previous.previous).lower()
                     ):
                         coupons += self.parse_codes(list_coupon)
+            else:
+                print(f'Page pockettactics not accessible: {response.status_code}, {response.text}')
                         
         with requests.get(
             url='https://ucngame.com/codes/guardian-tales-coupon-codes',
@@ -70,8 +72,15 @@ class GuardianTales:
                 soup = BeautifulSoup(response.text, features='html.parser')
                 for list_coupon in soup.find_all('tbody')[0]:
                     coupons.append(list_coupon.contents[0].text)
+            else:
+                print(f'Page ucngame not accessible: {response.status_code}, {response.text}')
 
         return list(set(coupons))
+    
+    def store_old(self, coupon):
+        self.old_coupons.append(coupon)
+        with open('./guardian_tales/old_coupons.json', 'w') as file:
+            json.dump(self.old_coupons, file, indent=4)
 
     @staticmethod
     def parse_codes(rows):
@@ -83,11 +92,8 @@ class GuardianTales:
     
     @staticmethod
     def load_old():
-        with open('./guardian_tales/old_coupons.json', 'r') as file:
-            array_str = file.read()
-        return json.loads(array_str)      
-    
-    def store_old(self, coupon):
-        self.old_coupons.append(coupon)
-        with open('./guardian_tales/old_coupons.json', 'w') as file:
-            json.dump(self.old_coupons, file, indent=4)
+        try:
+            with open('./guardian_tales/old_coupons.json', 'r') as file:
+                return json.load(file)
+        except:
+            return []
