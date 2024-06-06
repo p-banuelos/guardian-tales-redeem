@@ -6,3 +6,5 @@ services:
     container_name: project-bot-guardian_tales
     environment:
       - user_id=${user_id}
+    cpus: '0.25'
+    mem_limit: 64M
