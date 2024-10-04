@@ -1,6 +1,6 @@
 services:
   container:
-    image: guardian_tales:latest
+    image: ubuntu:latest
     container_name: project-bot-guardian_tales
     environment:
       - user_id=${user_id}
