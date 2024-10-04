@@ -1,6 +1,7 @@
 services:
   container:
-    image: ubuntu:latest
+    build: .
+    image: guardian_tales_redeem:latest
     container_name: project-bot-guardian_tales
     environment:
       - user_id=${user_id}
