@@ -60,6 +60,7 @@ RUN pip3 install --no-index --find-links=/wheels --no-warn-script-location -r re
 # Copy the application code to the image
 COPY --chown=nobody:nogroup guardian_tales/ guardian_tales/
 COPY --chown=nobody:nogroup entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
 # Run the application as a non-root user for added security
 USER nobody
